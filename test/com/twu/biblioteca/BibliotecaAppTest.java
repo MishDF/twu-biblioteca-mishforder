@@ -1,12 +1,14 @@
 package com.twu.biblioteca;
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.util.InputMismatchException;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 
 public class BibliotecaAppTest {
@@ -25,6 +27,32 @@ public class BibliotecaAppTest {
 
     }
 
+    @Test
+    public void bookListNotEmpty(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.initList();
+        Assert.assertFalse(mockApp.bookList.isEmpty());
+    }
 
+    @Test
+    public void bookStringCorrect(){
+        Book book = new Book("name", "author", "0000");
+        assertEquals(book.toString(), "name  |   author  |   0000");
+    }
+
+    @Test
+    public void checkoutTest(){
+        Book book = new Book("name", "author", "0000");
+        book.checkout();
+        assertEquals(false, book.avaliable);
+    }
+
+    @Test
+    public void checkoutUnavaliable(){
+        Book book = new Book("name", "author", "0000");
+        book.checkout();
+        assertEquals(false, book.checkout());
+
+    }
 
 }
