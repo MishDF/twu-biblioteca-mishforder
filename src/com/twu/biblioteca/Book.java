@@ -1,27 +1,31 @@
 package com.twu.biblioteca;
 
 public class Book {
-    String name;
-    String author;
-    String year;
-    Boolean avaliable;
+    private String name;
+    private String author;
+    private String year;
+    private Boolean available;
 
     Book(){
         name = "default";
         author = "default";
         year = "0000";
-        avaliable = true;
+        available = true;
     }
 
     Book(String n, String a, String y){
         name = n;
         author = a;
         year = y;
-        avaliable = true;
+        available = true;
     }
 
-    public boolean getAvalaible(){
-        return avaliable;
+    public boolean getAvailable(){
+        return available;
+    }
+
+    public void setAvailable(boolean a){
+        available =a;
     }
 
     public String getName(){
@@ -34,13 +38,21 @@ public class Book {
     }
 
     public boolean checkout(){
-        if(avaliable ==true){
-            avaliable=false;
+        if(available ==true){
+            available=false;
             return true;
         }else {
             return false;
         }
     }
 
-    //return
+    public boolean returnBook(){
+
+        if(available ==false){
+            available=true;
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

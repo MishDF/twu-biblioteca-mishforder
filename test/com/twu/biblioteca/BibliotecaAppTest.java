@@ -44,7 +44,7 @@ public class BibliotecaAppTest {
     public void checkoutTest(){
         Book book = new Book("name", "author", "0000");
         book.checkout();
-        assertEquals(false, book.avaliable);
+        assertEquals(false, book.getAvailable());
     }
 
     @Test
@@ -53,6 +53,21 @@ public class BibliotecaAppTest {
         book.checkout();
         assertEquals(false, book.checkout());
 
+    }
+
+    @Test
+    public void returnTest(){
+        Book book = new Book("name", "author", "0000");
+        book.setAvailable(false);
+        book.returnBook();
+        assertEquals(true, book.getAvailable());
+    }
+
+    @Test
+    public void returnAvaliable(){
+        Book book = new Book("name", "author", "0000");
+        book.returnBook();
+        assertEquals(false, book.returnBook());
     }
 
 }

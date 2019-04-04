@@ -73,7 +73,7 @@ public class BibliotecaApp {
 
     public static void showBooks(){
         for(int i=0; i<bookList.size();i++){
-            if(bookList.get(i).getAvalaible()==true) {
+            if(bookList.get(i).getAvailable()==true) {
                 String book = bookList.get(i).toString();
                 System.out.println(book);
             }
@@ -115,7 +115,28 @@ public class BibliotecaApp {
     }
 
     public static void returnBook(){
+        System.out.println("Please type in the name of the book you want to return");
+        //type in book name
+        String bookName = scan.nextLine();
+        //check if book
+        boolean inList=false;
+        int bookIndex=0;
+        for(int i=0; i<bookList.size(); i++){
+            if(bookName.equals(bookList.get(i).getName())){
+                inList=true;
+                bookIndex=i;
+            }
+        }
 
+        if(inList==true){
+            if(bookList.get(bookIndex).returnBook()){
+                System.out.println("Thank You for returning the book");
+            }else{
+                System.out.println("That is not a valid boook to return");
+            }
+        }else{
+            System.out.println("That is not a valid boook to return");
+        }
     }
 
 
