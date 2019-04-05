@@ -19,18 +19,9 @@ public class BibliotecaAppTest {
     }
 
     @Test
-    public void menuSelectionTest(){
-        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
-        //if 1 then will call book list
-        mockApp.menuSelection(1);
-        Mockito.verify(mockApp, Mockito.times(1)).showBooks();
-
-    }
-
-    @Test
     public void bookListNotEmpty(){
         BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
-        mockApp.initList();
+        mockApp.initLists();
         Assert.assertFalse(mockApp.bookList.isEmpty());
     }
 
@@ -68,6 +59,84 @@ public class BibliotecaAppTest {
         Book book = new Book("name", "author", "0000");
         book.returnBook();
         assertEquals(false, book.returnBook());
+    }
+
+    @Test
+    public void movieListNotEmpty(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.initLists();
+        Assert.assertFalse(mockApp.movieList.isEmpty());
+    }
+
+    @Test
+    public void movieStringCorrect(){
+        Movie movie = new Movie("name", "1000", "director", 5);
+        assertEquals(movie.toString(), "name  |   1000  |   director  |   5/10");
+        Movie movie2 = new Movie("name", "1000", "director", 0);
+        assertEquals(movie2.toString(), "name  |   1000  |   director  |   rating unavailable");
+    }
+
+    @Test
+    public void checkoutMovieTest(){
+        Movie movie = new Movie("name", "1000", "director", 5);
+        movie.checkout();
+        assertEquals(false, movie.getAvailable());
+    }
+
+    @Test
+    public void checkoutMovieUnavaliable(){
+        Movie movie = new Movie("name", "1000", "director", 5);
+        movie.checkout();
+        assertEquals(false, movie.checkout());
+
+    }
+
+    @Test
+    public void userListNotEmpty(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.initLists();
+        Assert.assertFalse(mockApp.userList.isEmpty());
+    }
+
+    @Test
+    public void loginSuccess(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.userList.add(new User("111-1111", "123", "name", "default@email.com", "040000"));
+        Assert.assertTrue(mockApp.loginValidation("111-1111", "123"));
+    }
+
+    @Test
+    public void loginUserFail(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.userList.add(new User("111-1111", "123", "name", "default@email.com", "040000"));
+        Assert.assertFalse(mockApp.loginValidation("112-1111", "123"));
+    }
+
+    @Test
+    public void loginPasswordFail(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.userList.add(new User("111-1111", "123", "name",  "default@email.com", "040000"));
+        Assert.assertFalse(mockApp.loginValidation("111-1111", "124"));
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void viewUserBooksFail(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.currentUser.getBooks();
+
+    }
+
+    @Test
+    public void userStringCorrect() {
+        User user = new User("111-1111", "123", "name", "default@email.com", "040000");
+        assertEquals("name  |   default@email.com  |   040000", user.toString());
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void viewUserInfosFail(){
+        BibliotecaApp mockApp = Mockito.mock(BibliotecaApp.class);
+        mockApp.viewInfo();
+
     }
 
 }
