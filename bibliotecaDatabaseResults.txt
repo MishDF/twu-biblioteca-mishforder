@@ -1,0 +1,84 @@
+The biblioteca database
+--------------------------------------------------------------
+
+Q1 result:
+Anand Beck
+
+Q1 code:
+select name 
+from member 
+where id = (
+	select member_id 
+	from checkout_item 
+	where book_id = (
+		select id 
+		from book 
+		where title = "The Hobbit"
+	)
+);
+
+----------------------------------------------------------------
+
+Q2 result:
+37
+
+Q2 code:
+select count(*) 
+from member 
+where id not in (select member_id from checkout_item);
+
+----------------------------------------------------------------
+
+Q3 result:
+2|Fellowship of the Ring
+6|1984
+7|Tom Sawyer
+8|Catcher in the Rye
+9|To Kill a Mockingbird
+10|Domain Driven Design
+6|Thin Red Line
+7|Crouching Tiger, Hidden Dragon
+8|Lawrence of Arabia
+9|Office Space
+
+Q3 code:
+select *
+from book
+where not exists(select book_id from checkout_item where checkout_item.book_id=book.id);
+select *
+from movie
+where not exists(select movie_id from checkout_item where checkout_item.movie_id=movie.id);
+
+----------------------------------------------------------------
+
+Q4 result:
+Mish Forder
+
+Q4 code:
+insert into book(title) values("The Pragmatic Programmer");
+insert into member(name) values("Mish Forder");
+
+insert into checkout_item(member_id, book_id) 
+	select member.id, book.id 
+	from member, book
+	where member.name="Mish Forder" and book.title="The Pragmatic Programmer";
+
+
+select name from member where id = (
+	select member_id from checkout_item where book_id = (
+		select id from book where title = "The Pragmatic Programmer"
+	)
+);
+
+----------------------------------------------------------------
+
+Q5 result:
+Anand Beck
+Frank Smith
+
+Q5 code:
+select name from member where id in(
+	select member_id 
+	from checkout_item 
+	group by member_id 
+	having count(member_id)>1);
